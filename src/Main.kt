@@ -19,6 +19,66 @@ fun main() {
     println("")
     println("   Pinned   ")
     println("")
+    //print(gameInstructions())
+
+
+
+
+    createSquares()
+    showSquares()
+    setupBoard()
+    getPlayerName()
+
+}
+
+fun createSquares() {
+    while (squares.size < boardSize) {
+        squares.add(empty)
+    }
+
+}
+
+fun setupBoard() {
+    val whiteCounter = "O"
+    repeat(4) {
+        
+    }
+
+
+
+
+
+    val blackCounter =  "X"
+
+
+}
+
+
+fun getPlayerName() {
+    var player1Name: String
+    var player2Name: String
+
+    println("Enter player one's name: ")
+    player1Name = readln()
+    println("")
+    println("Enter player two's name: ")
+    player2Name = readln()
+    println("")
+    }
+
+
+fun showSquares() {
+    println("    1       2       3       4       5       6       7       8       9      10      11      12      13       14      15      16")
+    println("┬───────".repeat(squares.size) + ("┐"))
+    for (square in squares) {
+        print("│ $square".padEnd(8))
+    }
+    println("│")
+    print("┴───────".repeat(squares.size) + ("┘"))
+    println("")
+}
+
+fun gameInstructions() {
     println("")
     println("Rules:")
     println("")
@@ -45,46 +105,5 @@ fun main() {
     println("")
     println("The player who removes the black counter from square 1 wins ")
     println("")
-
-
-
-
-    createSquares()
-    showSquares()
-
-
 }
-
-fun createSquares() {
-    while (squares.size < boardSize) {
-        squares.add(empty)
-    }
-
-}
-
-fun addCounter() {
-
-}
-
-fun addBlackCounter() {
-
-}
-
-
-fun showSquares() {
-    println("    1       2       3       4       5       6       7       8       9      10      11      12      13       14      15      16")
-    println("┬───────".repeat(squares.size) + ("┐"))
-    for (square in squares) {
-        print("│ $square".padEnd(8))
-    }
-    println("│")
-    print("┴───────".repeat(squares.size) + ("┘"))
-    println("")
-}
-
-fun getUserAction() {
-
-}
-
-
 
