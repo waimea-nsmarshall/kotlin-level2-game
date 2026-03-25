@@ -14,10 +14,14 @@
 val squares = mutableListOf<String>()
 val empty = "----"
 val boardSize =16
-
+var player1Name =  ""
+var player2Name = ""
 fun main() {
     println("")
-    println("   Pinned   ")
+    print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
+    print("    Pinned    ".magenta())
+    print("╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
+    println("")
     println("")
     //print(gameInstructions())
 
@@ -25,9 +29,10 @@ fun main() {
 
 
     createSquares()
-    showSquares()
     setupBoard()
+    showSquares()
     getPlayerName()
+    playerAction()
 
 }
 
@@ -39,24 +44,30 @@ fun createSquares() {
 }
 
 fun setupBoard() {
-    val whiteCounter = "O"
+    val whiteCounter = "  ◯   ".green()
     repeat(4) {
-        
+        while(true) {
+            val random = (0 .. 15).random()
+            if (squares[random] == "----") {
+                squares[random] = whiteCounter
+                break
+            }
+        }
     }
 
-
-
-
-
-    val blackCounter =  "X"
-
+    val blackCounter = "  ╳   ".red()
+        while(true) {
+            val random = (0 .. 15).random()
+            if (squares[random] == "----") {
+                squares[random] = blackCounter
+                break
+            }
+        }
 
 }
 
 
 fun getPlayerName() {
-    var player1Name: String
-    var player2Name: String
 
     println("Enter player one's name: ")
     player1Name = readln()
@@ -76,6 +87,16 @@ fun showSquares() {
     println("│")
     print("┴───────".repeat(squares.size) + ("┘"))
     println("")
+}
+
+fun playerAction() {
+    var player1move = Int
+    var player2move = Int
+    println("$player1Name pick a counter: ")
+
+    val player1Choice = readln().toInt()
+    
+
 }
 
 fun gameInstructions() {
