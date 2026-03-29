@@ -16,6 +16,7 @@ val empty = "----"
 val boardSize =16
 var player1Name =  ""
 var player2Name = ""
+var player1Move = 0
 fun main() {
     println("")
     print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
@@ -32,7 +33,7 @@ fun main() {
     setupBoard()
     showSquares()
     getPlayerName()
-    playerAction()
+    player1Action()
 
 }
 
@@ -89,13 +90,12 @@ fun showSquares() {
     println("")
 }
 
-fun playerAction() {
-    var player1move = Int
-    var player2move = Int
-    println("$player1Name pick a counter: ")
-
-    val player1Choice = readln().toInt()
-    
+fun player1Action() {
+    while (true) {
+        println("$player1Name pick a counter: ")
+        player1Move = readln().toInt() - 1
+        if (player1Move == null || 1 .. 16) {}
+    }
 
 }
 
