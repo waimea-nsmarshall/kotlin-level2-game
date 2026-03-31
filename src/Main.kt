@@ -17,6 +17,7 @@ val boardSize =16
 var player1Name =  ""
 var player2Name = ""
 var player1Move = 0
+var player1Choice = 0
 fun main() {
     println("")
     print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
@@ -93,11 +94,43 @@ fun showSquares() {
 fun player1Action() {
     while (true) {
         println("$player1Name pick a counter: ")
-        player1Move = readln().toInt() - 1
-        if (player1Move == null || 1 .. 16) {}
+        player1Choice = readln().toInt() - 1
+        if (player1Choice < 0 || player1Choice >= boardSize) {
+            println("Error (Choice is bigger than board)")
+            continue
+        }
+        if (squares[player1Choice] == empty) {
+            println("Error (square is empty)")
+        }
+        break
     }
+    while (true) {
+        print("Choose where to move your counter: ")
+        player1Move = readln().toInt() - 1
+        if ((player1Move != 0) || (player1Move <= boardSize)) {
+            val squareOne = squares[player1Choice]
+            val squareTwo = squares[player1Move]
 
+            squares[player1Move] = squareOne
+            squares[player1Choice] = squareTwo
+
+            showSquares()
+            break
+        }
+
+        else {
+            println("Error (Choice is outside the board)")
+            continue
+
+        }
+    }
 }
+//fun win() {
+ //   if (squares.size = 1 {
+ //       1 == ("  ╳   ".red())
+ //   })
+ //       println("$playerTurnName Won!!!")
+//}
 
 fun gameInstructions() {
     println("")
