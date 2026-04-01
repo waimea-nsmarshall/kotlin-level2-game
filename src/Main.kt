@@ -18,6 +18,9 @@ var player1Name =  ""
 var player2Name = ""
 var player1Move = 0
 var player1Choice = 0
+var player2Move = 0
+var player2Choice = 0
+var player1Turn = true
 fun main() {
     println("")
     print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
@@ -35,6 +38,7 @@ fun main() {
     showSquares()
     getPlayerName()
     player1Action()
+    player2Action()
 
 }
 
@@ -95,31 +99,74 @@ fun player1Action() {
     while (true) {
         println("$player1Name pick a counter: ")
         player1Choice = readln().toInt() - 1
-        if (player1Choice < 0 || player1Choice >= boardSize) {
-            println("Error (Choice is bigger than board)")
+        if ( player1Choice >= boardSize) {
+            println("Error (Choice is bigger than board)".red())
             continue
         }
         if (squares[player1Choice] == empty) {
-            println("Error (square is empty)")
+            println("Error (square is empty)".red())
+            continue
         }
         break
     }
     while (true) {
-        print("Choose where to move your counter: ")
+        print("$player1Name choose where to move your counter: ")
         player1Move = readln().toInt() - 1
-        if ((player1Move != 0) || (player1Move <= boardSize)) {
-            val squareOne = squares[player1Choice]
-            val squareTwo = squares[player1Move]
 
-            squares[player1Move] = squareOne
-            squares[player1Choice] = squareTwo
+        if (player1Move > player1Choice) {
+                println("Error (You can only move left)".red())
+            }
+
+        if ( player1Move >= boardSize) {
+           println("Error (Choice is outside the board)".red())
+            continue
+
+        }
+                val squareOne = squares[player2Choice]
+                val squareTwo = squares[player2Move]
+
+                squares[player2Move] = squareOne
+                squares[player2Choice] = squareTwo
+
+                showSquares()
+                break
+            }
+    }
+
+
+fun player2Action() {
+    while (true) {
+        println("$player2Name pick a counter: ")
+        player2Choice = readln().toInt() - 1
+        if (player2Choice < 0 || player2Choice >= boardSize) {
+            println("Error (Choice is bigger than board)".red())
+            continue
+        }
+        if (squares[player2Choice] == empty) {
+            println("Error (square is empty)".red())
+            continue
+        }
+        break
+    }
+    while (true) {
+        print("$player2Name choose where to move your counter: ")
+        player2Move = readln().toInt() - 1
+        if ((player2Move != 0) || (player2Move <= boardSize)) {
+            val squareOne = squares[player2Choice]
+            val squareTwo = squares[player2Move]
+
+            squares[player2Move] = squareOne
+            squares[player2Choice] = squareTwo
 
             showSquares()
             break
         }
 
         else {
-            println("Error (Choice is outside the board)")
+            if (player2Move >= player2Choice)
+                println("Error (You can only move left)".red())
+            if (player2Move >= boardSize)
+                println("Error (Choice is outside the board)".red())
             continue
 
         }
