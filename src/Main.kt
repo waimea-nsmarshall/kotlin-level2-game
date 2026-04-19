@@ -28,9 +28,23 @@ fun main() {
     print("╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
     println("")
     println("")
-    //print(gameInstructions())
+    println("")
+    println("")
+    println("")
 
 
+    while (true) {
+        println("Do you wish to view the game instructions?")
+        println("[Y]es")
+        println("[N]o")
+        val choice = readln()
+        if (choice == "Y" || choice == "y") {
+           gameInstructions()
+            break
+        } else {
+            break
+        }
+    }
 
 
     createSquares()
@@ -98,6 +112,7 @@ fun showSquares() {
 fun player1Action() {
     while (true) {
         println("$player1Name pick a counter: ")
+        if player1Choice 
         player1Choice = readln().toInt() - 1
         if ( player1Choice >= boardSize) {
             println("Error (Choice is bigger than board)".red())
@@ -122,11 +137,11 @@ fun player1Action() {
             continue
 
         }
-                val squareOne = squares[player2Choice]
-                val squareTwo = squares[player2Move]
+                val squareOne = squares[player1Choice]
+                val squareTwo = squares[player1Move]
 
-                squares[player2Move] = squareOne
-                squares[player2Choice] = squareTwo
+                squares[player1Move] = squareOne
+                squares[player1Choice] = squareTwo
 
                 showSquares()
                 break
