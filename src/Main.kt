@@ -13,14 +13,13 @@
 
 val squares = mutableListOf<String>()
 val empty = "----"
-val boardSize =16
+val boardSize = 16
 var player1Name =  ""
 var player2Name = ""
 var player1Move = 0
 var player1Choice = 0
 var player2Move = 0
 var player2Choice = 0
-var player1Turn = true
 fun main() {
     println("")
     print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
@@ -46,11 +45,10 @@ fun main() {
         }
     }
 
-
+    getPlayerName()
     createSquares()
     setupBoard()
     showSquares()
-    getPlayerName()
     player1Action()
     player2Action()
 
@@ -110,11 +108,13 @@ fun showSquares() {
 }
 
 fun player1Action() {
+
+    var player1Win = 0
+
     while (true) {
         println("$player1Name pick a counter: ")
-        if player1Choice 
         player1Choice = readln().toInt() - 1
-        if ( player1Choice >= boardSize) {
+        if (player1Choice >= boardSize) {
             println("Error (Choice is bigger than board)".red())
             continue
         }
@@ -128,71 +128,130 @@ fun player1Action() {
         print("$player1Name choose where to move your counter: ")
         player1Move = readln().toInt() - 1
 
-        if (player1Move > player1Choice) {
-                println("Error (You can only move left)".red())
-            }
-
-        if ( player1Move >= boardSize) {
-           println("Error (Choice is outside the board)".red())
-            continue
-
+        if (squares[player1Move] == "  ◯   ".green()) {
+            player1Win++
         }
-                val squareOne = squares[player1Choice]
-                val squareTwo = squares[player1Move]
 
-                squares[player1Move] = squareOne
-                squares[player1Choice] = squareTwo
+        if (player1Move > player1Choice) {
+            println("Error (You can only move left)".red())
+        }
 
-                showSquares()
-                break
+        if (player1Move >= boardSize) {
+            println("Error (Choice is outside the board)".red())
+
+
+
+
+            for (i in player1Choice + 1..player1Move + 1) {
+                if (squares[i] != empty) {
+                    println("Error(Cannot skip counters)".red())
+                    continue
+                }
+
             }
+
+
+
+            val squareOne = squares[player1Choice]
+            val squareTwo = squares[player1Move]
+
+            squares[player1Move] = squareOne
+            squares[player1Choice] = squareTwo
+
+            showSquares()
+            break
+        }
+
+        if(player1Win == 0) {
+            showSquares()
+            player2Action()
+        }
+        else {
+            gameWin1()
+        }
+
     }
+}
+
 
 
 fun player2Action() {
+    var player2Win = 0
+
     while (true) {
         println("$player2Name pick a counter: ")
         player2Choice = readln().toInt() - 1
+
+        if (squares[player2Move] == "  ◯   ".green())
+            player2Win++
+
+
         if (player2Choice < 0 || player2Choice >= boardSize) {
             println("Error (Choice is bigger than board)".red())
             continue
         }
         if (squares[player2Choice] == empty) {
             println("Error (square is empty)".red())
-            continue
-        }
-        break
-    }
-    while (true) {
-        print("$player2Name choose where to move your counter: ")
-        player2Move = readln().toInt() - 1
-        if ((player2Move != 0) || (player2Move <= boardSize)) {
-            val squareOne = squares[player2Choice]
-            val squareTwo = squares[player2Move]
 
-            squares[player2Move] = squareOne
-            squares[player2Choice] = squareTwo
 
-            showSquares()
+            for (i in player2Choice + 1..player2Move + 1) {
+                if (squares[i] != empty) {
+                    println("Error(Cannot skip counters)".red())
+                    continue
+                }
+            }
             break
         }
+        while (true) {
+            print("$player2Name choose where to move your counter: ")
+            player2Move = readln().toInt() - 1
+            if (player2Move != 0 || player2Move <= boardSize) {
+                val squareOne = squares[player2Choice]
+                val squareTwo = squares[player2Move]
 
-        else {
-            if (player2Move >= player2Choice)
-                println("Error (You can only move left)".red())
-            if (player2Move >= boardSize)
-                println("Error (Choice is outside the board)".red())
-            continue
+                squares[player2Move] = squareOne
+                squares[player2Choice] = squareTwo
+
+                showSquares()
+                break
+            } else {
+                if (player2Move >= player2Choice)
+                    println("Error (You can only move left)".red())
+                if (player2Move >= boardSize)
+                    println("Error (Choice is outside the board)".red())
+                continue
+
+            }
 
         }
+        if (player2Win == 0) {
+            showSquares()
+            player1Action()
+        } else {
+            gameWin2()
+        }
     }
+
 }
-//fun win() {
- //   if (squares.size = 1 {
- //       1 == ("  ╳   ".red())
- //   })
- //       println("$playerTurnName Won!!!")
-//}
+
+fun gameWin1() {
+    println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
+    println("")
+    println("$player1Name wins the game!!!".green())
+    println("")
+    println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
+}
+
+fun gameWin2() {
+        println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
+        println("")
+        println("$player2Name wins the game!!!".green())
+        println("")
+        println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
+    }
+
+
+
 
 fun gameInstructions() {
     println("")
@@ -202,7 +261,7 @@ fun gameInstructions() {
     println("")
     println("A row of 16 squares, numbered 1 to 16 from left to right ")
     println("")
-    println("5 counters (total) are placed randomly on the board - 4 () and 1 black  ")
+    println("5 counters (total) are placed randomly on the board - 4  ◯  and 1  ╳  ")
     println("")
     println("Decide who goes first ")
     println("")
@@ -212,7 +271,7 @@ fun gameInstructions() {
     println("")
     println("On your turn you must do exactly one of the following:")
     println("")
-    println("   Slide any counter (black or white) any number of squares to the left, as long as no ")
+    println("   Slide any counter (◯  or ╳) any number of squares to the left, as long as no ")
     println("   other counter is in the way and the destination square is empty, or… ")
     println("")
     println("Remove the counter on square 1 (only if a counter is there) ")
