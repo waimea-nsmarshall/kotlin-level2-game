@@ -42,7 +42,7 @@ fun main() {
         if (choice == "Y" || choice == "y") {
            gameInstructions()
             break
-        } else {
+        } else if (choice == "N" || choice == "n") {
             break
         }
     }
@@ -51,8 +51,19 @@ fun main() {
     createSquares()
     setupBoard()
     showSquares()
-    player1Action()
-    player2Action()
+
+    while (true) {
+        player1Action()
+        if (squares[0] == blackCounter ) {
+            gameWin1()
+            break
+        }
+        player2Action()
+        if (squares[0] == blackCounter ) {
+            gameWin2()
+            break
+        }
+    }
 
 }
 
@@ -64,37 +75,41 @@ fun createSquares() {
 }
 
 fun setupBoard() {
-    val whiteCounter = "  ◯   ".green()
     repeat(4) {
         while(true) {
-            val random = (0 .. 15).random()
-            if (squares[random] == "----") {
+            val random = (0 .. 16).random()
+            if (squares[random] == empty) {
                 squares[random] = whiteCounter
                 break
             }
         }
     }
-
-    val blackCounter = "  ╳   ".red()
         while(true) {
-            val random = (0 .. 15).random()
-            if (squares[random] == "----") {
+            val random = (0 .. 16).random()
+            if (squares[random] == empty) {
                 squares[random] = blackCounter
                 break
             }
+            }
         }
 
-}
 
 
 fun getPlayerName() {
+    while (true) {
+        println("Enter player one's name: ")
+        player1Name = readln()
+        if (player1Name == "")
+            continue
+        println("")
+        println("Enter player two's name: ")
+        player2Name = readln()
+        if (player2Name == "")
+            continue
+        println("")
+        break
+    }
 
-    println("Enter player one's name: ")
-    player1Name = readln()
-    println("")
-    println("Enter player two's name: ")
-    player2Name = readln()
-    println("")
     }
 
 
@@ -134,25 +149,27 @@ fun player1Action() {
             continue
         }
 
-        if (player1Move >= boardSize) {
+        if (player1Move < 0 || player1Move >= boardSize) {
             println("Error (Choice is outside the board)".red())
             continue
         }
 
         if (squares[player1Move] != empty) {
-            println("Error(Pick and empty square)".red())
+            println("Error(Pick an empty square)".red())
             continue
         }
 
-
-            for (i in player1Choice + 1..player1Move + 1) {
+            var nothingBetween = true
+            for (i in player1Move + 1 .. player1Choice) {
                 if (squares[i] != empty) {
                     println("Error(Cannot skip counters)".red())
-                    continue
+                    nothingBetween = false
+                    break
                 }
 
             }
 
+            if (!nothingBetween) continue
 
 
             val squareOne = squares[player1Choice]
@@ -161,14 +178,20 @@ fun player1Action() {
             squares[player1Move] = squareOne
             squares[player1Choice] = squareTwo
 
+            while (true) {
+                if (squares[0] = whiteCounter) {
+                    squares[0] = empty
+                    continue
+                } else if (squares[0] == blackCounter) {
+                    gameWin1()
+                } else if (squares[0] = empty) {
+                    continue
+                }
+                break
+            }
+
             showSquares()
 
-        if (squares[0] == blackCounter){
-            gameWin1()
-            return
-        }
-
-        break
     }
 
     }
@@ -199,23 +222,26 @@ fun player2Action() {
                     continue
                 }
 
-                if (player2Move >= boardSize) {
+                if (player2Move < 0 || player2Move >= boardSize) {
                     println("Error (Choice is outside the board)".red())
                     continue
                 }
 
             if (squares[player2Move] != empty) {
-                println("Error(Pick and empty square)".red())
+                println("Error(Pick an empty square)".red())
                 continue
             }
-
+            var nothingBetween = true
             for (i in player2Choice + 1..player2Move + 1) {
                 if (squares[i] != empty) {
                     println("Error(Cannot skip counters)".red())
-                    continue
+                    nothingBetween = false
+                    break
                 }
+
             }
 
+            if (!nothingBetween) continue
 
                 val squareOne = squares[player2Choice]
                 val squareTwo = squares[player2Move]
@@ -223,11 +249,9 @@ fun player2Action() {
                 squares[player2Move] = squareOne
                 squares[player2Choice] = squareTwo
 
+
+            squares[0] = empty
             showSquares()
-            if (squares[0] == blackCounter) {
-                gameWin2()
-                return
-            }
                 break
 
         }
