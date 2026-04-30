@@ -24,9 +24,9 @@ val blackCounter = "  ╳   ".red()
 val whiteCounter = "  ◯   ".green()
 fun main() {
     println("")
-    print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
+    print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮".green())
     print("    Pinned    ".magenta())
-    print("╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮")
+    print("╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮".green())
     println("")
     println("")
     println("")
@@ -40,7 +40,7 @@ fun main() {
         println("[N]o")
         val choice = readln()
         if (choice == "Y" || choice == "y") {
-           gameInstructions()
+            gameInstructions()
             break
         } else if (choice == "N" || choice == "n") {
             break
@@ -54,45 +54,37 @@ fun main() {
 
     while (true) {
         player1Action()
-        if (squares[0] == blackCounter ) {
-            gameWin1()
-            break
-        }
         player2Action()
-        if (squares[0] == blackCounter ) {
-            gameWin2()
-            break
-        }
-    }
 
+    }
 }
+
+
 
 fun createSquares() {
     while (squares.size < boardSize) {
         squares.add(empty)
     }
-
 }
 
 fun setupBoard() {
     repeat(4) {
-        while(true) {
-            val random = (0 .. 16).random()
+        while (true) {
+            val random = (0..15).random()
             if (squares[random] == empty) {
                 squares[random] = whiteCounter
                 break
             }
         }
     }
-        while(true) {
-            val random = (0 .. 16).random()
-            if (squares[random] == empty) {
-                squares[random] = blackCounter
-                break
-            }
-            }
+    while (true) {
+        val random = (0..15).random()
+        if (squares[random] == empty) {
+            squares[random] = blackCounter
+            break
         }
-
+    }
+}
 
 
 fun getPlayerName() {
@@ -109,9 +101,7 @@ fun getPlayerName() {
         println("")
         break
     }
-
-    }
-
+}
 
 fun showSquares() {
     println("    1       2       3       4       5       6       7       8       9      10      11      12      13       14      15      16")
@@ -159,44 +149,32 @@ fun player1Action() {
             continue
         }
 
-            var nothingBetween = true
-            for (i in player1Move + 1 .. player1Choice) {
-                if (squares[i] != empty) {
-                    println("Error(Cannot skip counters)".red())
-                    nothingBetween = false
-                    break
-                }
-
-            }
-
-            if (!nothingBetween) continue
-
-
-            val squareOne = squares[player1Choice]
-            val squareTwo = squares[player1Move]
-
-            squares[player1Move] = squareOne
-            squares[player1Choice] = squareTwo
-
-            while (true) {
-                if (squares[0] = whiteCounter) {
-                    squares[0] = empty
-                    continue
-                } else if (squares[0] == blackCounter) {
-                    gameWin1()
-                } else if (squares[0] = empty) {
-                    continue
-                }
+        var nothingBetween = true
+        for (i in player1Move until player1Choice) {
+            if (squares[i] != empty) {
+                println("Error(Cannot skip counters)".red())
+                nothingBetween = false
                 break
             }
 
-            showSquares()
+        }
+        if (!nothingBetween) continue
+        val squareOne = squares[player1Choice]
+        val squareTwo = squares[player1Move]
 
+        squares[player1Move] = squareOne
+        squares[player1Choice] = squareTwo
+
+        if (player1Move == 0 && squareOne == blackCounter) {
+            gameWin1()
+            return
+        }
+        if (squares[0] == whiteCounter) {
+            squares[0] = empty
+        }
+        showSquares()
     }
-
-    }
-
-
+}
 
 
 fun player2Action() {
@@ -213,51 +191,54 @@ fun player2Action() {
             println("Error (square is empty)".red())
             continue
         }
+        break
+    }
         while (true) {
             print("$player2Name choose where to move your counter: ")
             player2Move = readln().toInt() - 1
 
-                if (player2Move >= player2Choice) {
-                    println("Error (You can only move left)".red())
-                    continue
-                }
+            if (player2Move >= player2Choice) {
+                println("Error (You can only move left)".red())
+                continue
+            }
 
-                if (player2Move < 0 || player2Move >= boardSize) {
-                    println("Error (Choice is outside the board)".red())
-                    continue
-                }
+            if (player2Move < 0 || player2Move >= boardSize) {
+                println("Error (Choice is outside the board)".red())
+                continue
+            }
 
             if (squares[player2Move] != empty) {
                 println("Error(Pick an empty square)".red())
                 continue
             }
             var nothingBetween = true
-            for (i in player2Choice + 1..player2Move + 1) {
+            for (i in player2Move until player2Choice) {
                 if (squares[i] != empty) {
                     println("Error(Cannot skip counters)".red())
                     nothingBetween = false
                     break
                 }
-
             }
-
             if (!nothingBetween) continue
 
-                val squareOne = squares[player2Choice]
-                val squareTwo = squares[player2Move]
 
-                squares[player2Move] = squareOne
-                squares[player2Choice] = squareTwo
+            val squareOne = squares[player2Choice]
+            val squareTwo = squares[player2Move]
 
+            squares[player2Move] = squareOne
+            squares[player2Choice] = squareTwo
 
-            squares[0] = empty
+            if (player2Move == 0 && squareOne == blackCounter) {
+                gameWin2()
+                return
+            }
+            if (squares[0] == whiteCounter) {
+                squares[0] = empty
+            }
             showSquares()
-                break
-
         }
-    }
 
-}
+    }
 
 fun gameWin1() {
     println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
@@ -274,9 +255,6 @@ fun gameWin2() {
         println("")
         println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
     }
-
-
-
 
 fun gameInstructions() {
     println("")
