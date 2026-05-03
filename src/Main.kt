@@ -70,7 +70,7 @@ fun createSquares() {
 fun setupBoard() {
     repeat(4) {
         while (true) {
-            val random = (0..15).random()
+            val random = (1..15).random()
             if (squares[random] == empty) {
                 squares[random] = whiteCounter
                 break
@@ -78,7 +78,7 @@ fun setupBoard() {
         }
     }
     while (true) {
-        val random = (0..15).random()
+        val random = (1..15).random()
         if (squares[random] == empty) {
             squares[random] = blackCounter
             break
@@ -133,6 +133,15 @@ fun player1Action() {
         print("$player1Name choose where to move your counter: ")
         player1Move = readln().toInt() - 1
 
+        if (player1Move == -1 && squares[player1Choice] == blackCounter) {
+            if(player1Choice == 0) {
+                gameWin1()
+            }
+            else {
+                println("Error (must be on square 1 for win)".red())
+                continue
+            }
+        }
 
         if (player1Move >= player1Choice) {
             println("Error (You can only move left)".red())
@@ -165,14 +174,12 @@ fun player1Action() {
         squares[player1Move] = squareOne
         squares[player1Choice] = squareTwo
 
-        if (player1Move == 0 && squareOne == blackCounter) {
-            gameWin1()
-            return
-        }
+
         if (squares[0] == whiteCounter) {
             squares[0] = empty
         }
         showSquares()
+        break
     }
 }
 
@@ -197,6 +204,15 @@ fun player2Action() {
             print("$player2Name choose where to move your counter: ")
             player2Move = readln().toInt() - 1
 
+            if (player2Move == -1 && squares[player2Choice] == blackCounter) {
+                if(player2Choice == 0) {
+                    gameWin2()
+                }
+                else {
+                    println("Error (must be on square 1 for win)".red())
+                    continue
+                }
+            }
             if (player2Move >= player2Choice) {
                 println("Error (You can only move left)".red())
                 continue
@@ -228,14 +244,12 @@ fun player2Action() {
             squares[player2Move] = squareOne
             squares[player2Choice] = squareTwo
 
-            if (player2Move == 0 && squareOne == blackCounter) {
-                gameWin2()
-                return
-            }
+
             if (squares[0] == whiteCounter) {
                 squares[0] = empty
             }
             showSquares()
+            break
         }
 
     }
