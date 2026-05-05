@@ -93,6 +93,8 @@ fun getPlayerName() {
         player1Name = readln()
         if (player1Name == "")
             continue
+        break}
+    while (true) {
         println("")
         println("Enter player two's name: ")
         player2Name = readln()
@@ -100,6 +102,7 @@ fun getPlayerName() {
             continue
         println("")
         break
+
     }
 }
 
@@ -133,15 +136,16 @@ fun player1Action() {
         print("$player1Name choose where to move your counter: ")
         player1Move = readln().toInt() - 1
 
-        if (player1Move == -1 && squares[player1Choice] == blackCounter) {
-            if(player1Choice == 0) {
+        if (player1Choice == 0) {
+            if (squares[0] == blackCounter) {
                 gameWin1()
-            }
-            else {
+                return
+            } else if (player1Move == -1) {
                 println("Error (must be on square 1 for win)".red())
                 continue
             }
         }
+
 
         if (player1Move >= player1Choice) {
             println("Error (You can only move left)".red())
@@ -204,11 +208,11 @@ fun player2Action() {
             print("$player2Name choose where to move your counter: ")
             player2Move = readln().toInt() - 1
 
-            if (player2Move == -1 && squares[player2Choice] == blackCounter) {
-                if(player2Choice == 0) {
+            if (player2Choice == 0) {
+                if (squares[0] == blackCounter) {
                     gameWin2()
-                }
-                else {
+                    return
+                } else if (player2Move == -1) {
                     println("Error (must be on square 1 for win)".red())
                     continue
                 }

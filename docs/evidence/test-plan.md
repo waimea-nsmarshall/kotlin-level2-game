@@ -10,32 +10,38 @@ Terminology:
 
 ---
 
-## Example Test Name
-
-Example test description. Example test description. Example test description. Example test description. Example test description. Example test description.
-
+## Input Name - Invalid / Valid
+Test to prove that invalid names will be rejected
 ### Test Data To Use
-
-Details of test data and reasons for selection. Details of test data and reasons for selection. Details of test data and reasons for selection.
-
+I will try adding no name into both of the player name functions to prove that it will not accept them.
 ### Expected Test Result
-
-Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. 
+I expect that the program will keep asking for a valid name until one is entered.
 
 ---
 
-## Example Test Name
-
-Example test description. Example test description. Example test description. Example test description. Example test description. Example test description.
-
+## Counter Skipping - Invalid
+Test to determine that counters cannot skip over each other
 ### Test Data To Use
-
-Details of test data and reasons for selection. Details of test data and reasons for selection. Details of test data and reasons for selection.
-
+I will try to skip a counter over another one to prove that it will not skip.
 ### Expected Test Result
-
-Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. 
+I expect that an error message will come up prompting the user to choose another square to place the counter on.
 
 ---
 
+## Board Setup - Gameplay
+Test to determine that counters will set up automatically without any errors
+### Test Data To Use
+I will set up the board 3 times and make sure there are no errors for any
+### Expected Test Result
+I expect that an error message will come up prompting the user to choose another square to place the counter on.
 
+---
+
+## Player 1 win - Gameplay
+Test to determine that counters cannot skip over each other
+### Test Data To Use
+I will try to skip a counter over another one to prove that it will not skip.
+### Expected Test Result
+I expect that an error message will come up prompting the user to choose another square to place the counter on.
+
+---
