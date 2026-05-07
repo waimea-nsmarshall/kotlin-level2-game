@@ -179,10 +179,10 @@ fun player1Action() {
 
         }
         if (!nothingBetween) continue
-        val squareOne = squares[player1Choice]
+        val squareOne = squares[player1Choice] //Code to swap the counters, this assigns player1Choice and Player1Move with squares.
         val squareTwo = squares[player1Move]
 
-        squares[player1Move] = squareOne
+        squares[player1Move] = squareOne //This is the part that swaps the Choice square and Move square.
         squares[player1Choice] = squareTwo
 
 
@@ -215,7 +215,7 @@ fun player2Action() {
             print("$player2Name choose where to move your counter: ")
             player2Move = readln().toInt() - 1
 
-            if (player2Choice == 0) {
+            if (player2Choice == 0) {                    // if player choice and black square are square 1 then game win 2 runs.
                 if (squares[0] == blackCounter) {
                     gameWin2()
                     gameEnd = true
@@ -225,7 +225,7 @@ fun player2Action() {
                     continue
                 }
             }
-            if (player2Move >= player2Choice) {
+            if (player2Move >= player2Choice) {            // Error checking for the move.
                 println("Error (You can only move left)".red())
                 continue
             }
@@ -239,7 +239,7 @@ fun player2Action() {
                 println("Error(Pick an empty square)".red())
                 continue
             }
-            var nothingBetween = true
+            var nothingBetween = true         //checking there are no counters between playermove and player choice
             for (i in player2Move until player2Choice) {
                 if (squares[i] != empty) {
                     println("Error(Cannot skip counters)".red())
@@ -282,7 +282,7 @@ fun gameWin2() {
         println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
     }
 
-fun gameInstructions() {
+fun gameInstructions() {               // Game instructions that run when  gameInstructions() triggers.
     println("")
     println("                                     Rules:")
     println("")
