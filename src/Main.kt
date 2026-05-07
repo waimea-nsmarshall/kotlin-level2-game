@@ -4,7 +4,7 @@
  * ---------------------------------------------------------------------
  * Project Name:   Pinned
  * Project Author: Nikau Marshall
- * GitHub Repo:    GITHUB REPO URL HERE
+ * GitHub Repo:   
  * ---------------------------------------------------------------------
  * Notes:
  * PROJECT NOTES HERE
@@ -22,6 +22,7 @@ var player2Move = 0
 var player2Choice = 0
 val blackCounter = "  ╳   ".red()
 val whiteCounter = "  ◯   ".green()
+var gameEnd = false
 fun main() {
     println("")
     print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮".green())
@@ -54,7 +55,12 @@ fun main() {
 
     while (true) {
         player1Action()
+        if (gameEnd == true)
+            break
         player2Action()
+
+        if (gameEnd == true)
+            break
 
     }
 }
@@ -139,6 +145,7 @@ fun player1Action() {
         if (player1Choice == 0) {
             if (squares[0] == blackCounter) {
                 gameWin1()
+                gameEnd = true
                 return
             } else if (player1Move == -1) {
                 println("Error (must be on square 1 for win)".red())
@@ -211,6 +218,7 @@ fun player2Action() {
             if (player2Choice == 0) {
                 if (squares[0] == blackCounter) {
                     gameWin2()
+                    gameEnd = true
                     return
                 } else if (player2Move == -1) {
                     println("Error (must be on square 1 for win)".red())
@@ -276,9 +284,9 @@ fun gameWin2() {
 
 fun gameInstructions() {
     println("")
-    println("Rules:")
+    println("                                     Rules:")
     println("")
-    println("    Game Setup")
+    println("                   Game Setup")
     println("")
     println("A row of 16 squares, numbered 1 to 16 from left to right ")
     println("")
@@ -286,7 +294,7 @@ fun gameInstructions() {
     println("")
     println("Decide who goes first ")
     println("")
-    println("    Gameplay")
+    println("                    Gameplay")
     println("")
     println("Players take turns - You may not skip your turn ")
     println("")
@@ -297,7 +305,7 @@ fun gameInstructions() {
     println("")
     println("Remove the counter on square 1 (only if a counter is there) ")
     println("")
-    println("     Win Condition ")
+    println("                    Win Condition ")
     println("")
     println("The player who removes the black counter from square 1 wins ")
     println("")
