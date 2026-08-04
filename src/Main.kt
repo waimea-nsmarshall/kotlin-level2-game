@@ -23,6 +23,10 @@ var player2Choice = 0
 val blackCounter = "  ╳   ".red()
 val whiteCounter = "  ◯   ".green()
 var gameEnd = false
+
+/**
+ * Prints the title with colours to make it look appealing.
+ */
 fun main() {
     println("")
     print("  ╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮╰╯╭╮".green())
@@ -40,6 +44,7 @@ fun main() {
         println("[Y]es")
         println("[N]o")
         val choice = readln()
+        //  This code gives the players a chance to view the instructions using the "Y" and "N" keys.   //
         if (choice == "Y" || choice == "y") {
             gameInstructions()
             break
@@ -53,6 +58,7 @@ fun main() {
     setupBoard()
     showSquares()
 
+// This script is the core loop of the game which switches what players turn it is until someone wins. //
     while (true) {
         player1Action()
         if (gameEnd == true)
@@ -66,17 +72,25 @@ fun main() {
 }
 
 
-
+/**
+ *  This function adds the squares in and sets them to empty.
+ */
 fun createSquares() {
     while (squares.size < boardSize) {
         squares.add(empty)
     }
 }
 
+
+/**
+ * This code replaces 4 of the empty squares with white counters.
+ */
 fun setupBoard() {
+    // we need four white counters
     repeat(4) {
         while (true) {
             val random = (1..15).random()
+            // Only put on an empty square
             if (squares[random] == empty) {
                 squares[random] = whiteCounter
                 break
@@ -84,6 +98,7 @@ fun setupBoard() {
         }
     }
     while (true) {
+        // This only adds one random black counter
         val random = (1..15).random()
         if (squares[random] == empty) {
             squares[random] = blackCounter
@@ -92,7 +107,9 @@ fun setupBoard() {
     }
 }
 
-
+/**
+ * This function asks the users to input player names
+ */
 fun getPlayerName() {
     while (true) {
         println("Enter player one's name: ")
@@ -111,9 +128,12 @@ fun getPlayerName() {
 
     }
 }
-
+/**
+ * This script creates the visual board that the game is played on and updates it every move.
+ */
 fun showSquares() {
     println("    1       2       3       4       5       6       7       8       9      10      11      12      13       14      15      16")
+    // these characters join to create the boxes to go around the counters
     println("┬───────".repeat(squares.size) + ("┐"))
     for (square in squares) {
         print("│ $square".padEnd(8))
@@ -123,10 +143,14 @@ fun showSquares() {
     println("")
 }
 
+/**
+ * This function gives player one the option to pick and move one counter. It also contains all the error messages if they make a mistake.
+ */
 fun player1Action() {
 
     while (true) {
         println("$player1Name pick a counter: ")
+        // player inputs the number of the counter they want
         player1Choice = readln().toInt() - 1
         if (player1Choice >= boardSize) {
             println("Error (Choice is bigger than board)".red())
@@ -143,6 +167,7 @@ fun player1Action() {
         player1Move = readln().toInt() - 1
 
         if (player1Choice == 0) {
+            //if player chooses the first square and it's the black counter, the win script plays and the game ends.
             if (squares[0] == blackCounter) {
                 gameWin1()
                 gameEnd = true
@@ -153,7 +178,7 @@ fun player1Action() {
             }
         }
 
-
+        // the following three scripts are error codes.
         if (player1Move >= player1Choice) {
             println("Error (You can only move left)".red())
             continue
@@ -170,6 +195,7 @@ fun player1Action() {
         }
 
         var nothingBetween = true
+        // if there are any counters in between the choice and the move then it shows and error message.
         for (i in player1Move until player1Choice) {
             if (squares[i] != empty) {
                 println("Error(Cannot skip counters)".red())
@@ -194,7 +220,9 @@ fun player1Action() {
     }
 }
 
-
+/**
+ * Pretty much the same as player one but for player two.
+ */
 fun player2Action() {
 
     while (true) {
@@ -225,7 +253,8 @@ fun player2Action() {
                     continue
                 }
             }
-            if (player2Move >= player2Choice) {            // Error checking for the move.
+            if (player2Move >= player2Choice) {
+                // Error checking for the move.
                 println("Error (You can only move left)".red())
                 continue
             }
@@ -239,7 +268,7 @@ fun player2Action() {
                 println("Error(Pick an empty square)".red())
                 continue
             }
-            var nothingBetween = true         //checking there are no counters between playermove and player choice
+            var nothingBetween = true
             for (i in player2Move until player2Choice) {
                 if (squares[i] != empty) {
                     println("Error(Cannot skip counters)".red())
@@ -256,7 +285,7 @@ fun player2Action() {
             squares[player2Move] = squareOne
             squares[player2Choice] = squareTwo
 
-
+            // makes sure that the first square hasn't got the black counter
             if (squares[0] == whiteCounter) {
                 squares[0] = empty
             }
@@ -266,6 +295,9 @@ fun player2Action() {
 
     }
 
+/**
+ * Functions to display which player won the game
+ */
 fun gameWin1() {
     println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
     println("")
@@ -282,7 +314,10 @@ fun gameWin2() {
         println("*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x")
     }
 
-fun gameInstructions() {               // Game instructions that run when  gameInstructions() triggers.
+/**
+ *  Game instructions that run when  gameInstructions() triggers so that the players understand the rules.
+ */
+fun gameInstructions() {
     println("")
     println("                                     Rules:")
     println("")
